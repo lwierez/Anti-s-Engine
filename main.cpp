@@ -8,17 +8,18 @@
 #include "Maths/matrix.h"
 #include "Engine/engine.h"
 #include "Engine/engine_object.h"
+#include "UserObjects/Camera.h"
 
 Mesh create_mesh();
 
 int main(int argc, char **argv)
 {
-    Engine::register_object(EngineObject(
+    Engine::register_object(new EngineObject(
         Vector3(0, 0, 0),
         Vector3(0, 0, 0),
         create_mesh()
     ));
-    Engine::register_object(EngineObject(
+    Engine::register_object(new EngineObject(
         Vector3(0, -10, 0),
         Vector3(0, 0, 0),
         Mesh({
@@ -35,11 +36,12 @@ int main(int argc, char **argv)
         })
     ));
 
-    Engine::set_current_camera(EngineObject(
+    Camera camera (
         Vector3(5, 10, -10),
         Vector3(-3.14/4, 0, 0),
         Mesh()
-    ));
+    );
+    Engine::set_current_camera(&camera);
 
     Engine::start(argc, argv);
 
