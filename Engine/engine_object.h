@@ -1,6 +1,7 @@
 #ifndef ENGINE_OBJECT_H
 #define ENGINE_OBJECT_H
 
+#include <iostream>
 #include <vector>
 
 #include "Maths/geometry.h"
@@ -30,6 +31,9 @@ class EngineObject
 public:
     EngineObject() {}
     EngineObject(Vector3, Vector3, Mesh);
+
+    // Function executed before each render cycle
+    virtual void BeforeRender() {};
 
     // Translate the object according to it rotation
     void translate(Vector3);

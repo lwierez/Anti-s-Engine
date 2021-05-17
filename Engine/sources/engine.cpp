@@ -6,9 +6,9 @@
 
 double Engine::fovRatio = 1 / tan(3.141 / 2 / 2);
 Vector3 Engine::light_position;
-EngineObject Engine::current_camera;
+EngineObject* Engine::current_camera;
 Matrix Engine::projection_matrix = Matrix(3, 3);
-std::vector<EngineObject> Engine::engine_objects;
+std::vector<EngineObject*> Engine::engine_objects;
 
 void Engine::start(int argc, char** argv)
 {
@@ -18,7 +18,6 @@ void Engine::start(int argc, char** argv)
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(600, 400);
     glutCreateWindow("Anti's Engine");
-
     // Define the porjection matrix
     Engine::projection_matrix.insert(0, 0, fovRatio * (double)glutGet(GLUT_WINDOW_HEIGHT) / glutGet(GLUT_WINDOW_WIDTH));
     Engine::projection_matrix.insert(1, 1, fovRatio);
@@ -40,11 +39,16 @@ void Engine::render(void)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+    // Execute all BeforeRender() functions
+    Engine::current_camera->BeforeRender();
+    for (auto object : engine_objects)
+        object->BeforeRender();
+
     // Register all triangles to render, and sort them to draw the closest points first
     std::vector<Triangle> triangles;
     for (auto object : engine_objects)
     {
-        auto transformed_object = object.get_world_mesh().translated(current_camera.get_position().multiply(-1)).rotated(current_camera.get_rotation());
+        auto transformed_object = object->get_world_mesh().translated(current_camera->get_position().multiply(-1)).rotated(current_camera->get_rotation());
         std::vector<Triangle> transformed_triangles = transformed_object.get_triangles();
         triangles.insert(triangles.end(), transformed_triangles.begin(), transformed_triangles.end());
     }
@@ -53,7 +57,7 @@ void Engine::render(void)
     });
 
     // Calculate the light position in camera space
-    auto light_position_from_camera_view = light_position.add(current_camera.get_position().multiply(-1)).rotated(current_camera.get_rotation());
+    auto light_position_from_camera_view = light_position.add(current_camera->get_position().multiply(-1)).rotated(current_camera->get_rotation());
 
     // Render each triangle
     for (auto triangle : triangles)
