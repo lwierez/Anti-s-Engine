@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 
     Camera camera (
         Vector3(5, 10, -10),
-        Vector3(-3.14/4, 0, 0),
+        Vector3(0.0, 0.0, 0.0),
         Mesh()
     );
     Engine::set_current_camera(&camera);

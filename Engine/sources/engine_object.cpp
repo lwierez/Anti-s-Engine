@@ -36,9 +36,9 @@ Mesh Mesh::rotated(Vector3 rotation)
     std::vector<Triangle> rotated_triangles;
     for (auto triangle : this->get_triangles())
         rotated_triangles.push_back(Triangle(
-            Vector3(triangle.a.to_matrix().multiply(x_rotation).multiply(y_rotation).multiply(z_rotation)),
-            Vector3(triangle.b.to_matrix().multiply(x_rotation).multiply(y_rotation).multiply(z_rotation)),
-            Vector3(triangle.c.to_matrix().multiply(x_rotation).multiply(y_rotation).multiply(z_rotation))
+            Vector3(triangle.a.to_matrix().multiply(y_rotation).multiply(x_rotation).multiply(z_rotation)),
+            Vector3(triangle.b.to_matrix().multiply(y_rotation).multiply(x_rotation).multiply(z_rotation)),
+            Vector3(triangle.c.to_matrix().multiply(y_rotation).multiply(x_rotation).multiply(z_rotation))
         ));
 
     return Mesh(rotated_triangles);
@@ -72,7 +72,7 @@ Mesh EngineObject::get_world_mesh()
 
 void EngineObject::translate(Vector3 translation)
 {
-    this->position = this->position.add(translation.rotated(this->rotation));
+    this->position = this->position.add(translation.rotated(Vector3(-this->rotation.x, -this->rotation.y, this->rotation.z)));
 }
 
 void EngineObject::rotate(Vector3 rotation)
