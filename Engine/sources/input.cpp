@@ -3,22 +3,19 @@
 
 #include "Engine/input.h"
 
-std::vector<unsigned char> Input::pressed_keys;
+bool Input::pressed_keys[255];
 
 void Input::key_pressed(unsigned char key, int x, int y)
 {
-    Input::pressed_keys.push_back(key);
+    Input::pressed_keys[key] = true;
 }
 
 void Input::key_up(unsigned char key, int x, int y)
 {
-    Input::pressed_keys.clear();
+    Input::pressed_keys[key] = false;
 }
 
 bool Input::is_key_pressed(unsigned char key)
 {
-    for (auto current_key : Input::pressed_keys)
-        if (current_key == key)
-            return true;
-    return false;
+    return Input::pressed_keys[key];
 }

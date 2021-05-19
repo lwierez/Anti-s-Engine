@@ -10,7 +10,7 @@ public:
     static void key_up(unsigned char, int, int);
     static bool is_key_pressed(unsigned char);
 private:
-    static std::vector<unsigned char> pressed_keys;
+    static bool pressed_keys[255];
 };
 
 #endif

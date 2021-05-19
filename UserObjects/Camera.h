@@ -13,15 +13,15 @@ public:
 
     void BeforeRender()
     {
-        this->translate(Vector3(
-            0.1 * (Input::is_key_pressed('d') - Input::is_key_pressed('q')),
-            0.1 * (Input::is_key_pressed('s') - Input::is_key_pressed('z')),
+        this->rotate(Vector3(
+            0.02 * (Input::is_key_pressed('o') - Input::is_key_pressed('l')),
+            0.02 * (Input::is_key_pressed('k') - Input::is_key_pressed('m')),
             0.0
         ));
-        this->rotate(Vector3(
-            0.01 * (Input::is_key_pressed('o') - Input::is_key_pressed('l')),
-            0.01 * (Input::is_key_pressed('m') - Input::is_key_pressed('k')),
-            0.0
+        this->translate(Vector3(
+            0.1 * (Input::is_key_pressed('d') - Input::is_key_pressed('q')),
+            0.0,
+            0.1 * (Input::is_key_pressed('z') - Input::is_key_pressed('s'))
         ));
     }
 };
