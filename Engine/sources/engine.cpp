@@ -2,6 +2,7 @@
 #include <GL/freeglut.h>
 
 #include "Engine/engine.h"
+#include "Engine/input.h"
 #include "Maths/matrix.h"
 
 double Engine::fovRatio = 1 / tan(3.141 / 2 / 2);
@@ -26,6 +27,9 @@ void Engine::start(int argc, char** argv)
     // Define the light position
     Engine::light_position = Vector3(-5000, 1000, -5000);
 
+    // Register keyboard events functions
+    glutKeyboardFunc(Input::key_pressed);
+    glutKeyboardUpFunc(Input::key_up);
     // Register the rendering function and start the rendering loop
     glutDisplayFunc(render);
     glutMainLoop();

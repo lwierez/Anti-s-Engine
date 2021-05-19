@@ -11,6 +11,7 @@
                 "Maths/sources/geometry.cpp",
                 "Engine/sources/engine_object.cpp",
                 "Engine/sources/engine.cpp",
+                "Engine/sources/input.cpp",
                 "-I",
                 "${workspaceFolder}",
                 "-o",
