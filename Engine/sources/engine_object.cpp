@@ -72,7 +72,7 @@ Mesh EngineObject::get_world_mesh()
 
 void EngineObject::translate(Vector3 translation)
 {
-    this->position = this->position.add(translation.rotated(Vector3(-this->rotation.x, -this->rotation.y, this->rotation.z)));
+    this->position = this->position.add(translation.rotated(this->rotation.multiply(-1)));
 }
 
 void EngineObject::rotate(Vector3 rotation)
